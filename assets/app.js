@@ -1,3 +1,5 @@
+const BIRTHDAY_PASSWORD = "O6I5";
+
 const wishes = [
   "愿朱子仪新的一岁无忧无虑。",
   "愿 Ziyi Zhu 一直幸福。",
@@ -24,7 +26,7 @@ const wishes = [
   "愿你一直被好运记得名字。",
   "愿 26 岁这一章安稳、明亮、顺利。",
   "愿你永远健康，永远快乐。",
-  "愿你成为自己最喜欢的样子。"
+  "愿你成为自己最喜欢的样子。",
 ];
 
 const magicLines = [
@@ -32,10 +34,14 @@ const magicLines = [
   "愿你新的一岁无忧无虑，一直幸福。",
   "愿健康和平安，永远稳稳地站在你身边。",
   "愿快乐不只在生日这天来，也在每个普通日子里来。",
-  "愿你的 26 岁，有明亮的开始，也有圆满的答案。"
+  "愿你的 26 岁，有明亮的开始，也有圆满的答案。",
 ];
 
 const body = document.body;
+const gate = document.querySelector("#gate");
+const gateForm = document.querySelector("#gateForm");
+const gatePassword = document.querySelector("#gatePassword");
+const gateError = document.querySelector("#gateError");
 const canvas = document.querySelector("#starCanvas");
 const ctx = canvas.getContext("2d");
 const wishGrid = document.querySelector("#wishGrid");
@@ -62,18 +68,39 @@ let lighterDrag = null;
 let fireworks = [];
 let finaleStarted = false;
 
+function unlockPage() {
+  gate.classList.add("is-open");
+  body.classList.remove("is-locked");
+  setTimeout(() => gate.remove(), 450);
+}
+
+gateForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (gatePassword.value.trim() === BIRTHDAY_PASSWORD) {
+    gateError.textContent = "";
+    unlockPage();
+    return;
+  }
+  gateError.textContent = "口令不对，再试一次。";
+  gatePassword.value = "";
+  gatePassword.focus();
+});
+
 function resizeCanvas() {
   const ratio = window.devicePixelRatio || 1;
   canvas.width = window.innerWidth * ratio;
   canvas.height = window.innerHeight * ratio;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  stars = Array.from({ length: Math.min(130, Math.floor(window.innerWidth / 9)) }, () => ({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    r: Math.random() * 1.5 + 0.3,
-    speed: Math.random() * 0.22 + 0.05,
-    glow: Math.random() * 0.55 + 0.25
-  }));
+  stars = Array.from(
+    { length: Math.min(130, Math.floor(window.innerWidth / 9)) },
+    () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.22 + 0.05,
+      glow: Math.random() * 0.55 + 0.25,
+    }),
+  );
   resizeFireworkCanvas();
 }
 
@@ -123,7 +150,8 @@ function lightWish(button, index) {
   burstAtElement(button, 7);
 
   if (litWishes.size === wishes.length) {
-    cakeStatus.textContent = "26 道祝福已经点亮。现在拖动打火机，点燃生日蜡烛。";
+    cakeStatus.textContent =
+      "26 道祝福已经点亮。现在拖动打火机，点燃生日蜡烛。";
     cakeSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
@@ -181,10 +209,12 @@ function setLighterPosition(clientX, clientY) {
 }
 
 function checkCandleContact() {
-  const flameRect = lighter.querySelector(".lighter-flame").getBoundingClientRect();
+  const flameRect = lighter
+    .querySelector(".lighter-flame")
+    .getBoundingClientRect();
   const flameCenter = {
     x: flameRect.left + flameRect.width / 2,
-    y: flameRect.top + flameRect.height / 2
+    y: flameRect.top + flameRect.height / 2,
   };
 
   candles.forEach((candle) => {
@@ -192,15 +222,22 @@ function checkCandleContact() {
     const wickRect = candle.querySelector(".wick").getBoundingClientRect();
     const wickCenter = {
       x: wickRect.left + wickRect.width / 2,
-      y: wickRect.top + wickRect.height / 2
+      y: wickRect.top + wickRect.height / 2,
     };
-    const distance = Math.hypot(flameCenter.x - wickCenter.x, flameCenter.y - wickCenter.y);
+    const distance = Math.hypot(
+      flameCenter.x - wickCenter.x,
+      flameCenter.y - wickCenter.y,
+    );
     if (distance < 42) {
       candle.classList.add("is-lit");
       burstAtElement(candle, 12);
-      const litCount = candles.filter((item) => item.classList.contains("is-lit")).length;
+      const litCount = candles.filter((item) =>
+        item.classList.contains("is-lit"),
+      ).length;
       cakeStatus.textContent =
-        litCount === candles.length ? "生日蜡烛点亮了。许愿吧，烟花开始。" : "很好，还差一根蜡烛。";
+        litCount === candles.length
+          ? "生日蜡烛点亮了。许愿吧，烟花开始。"
+          : "很好，还差一根蜡烛。";
       if (litCount === candles.length) {
         launchFinale();
       }
@@ -238,7 +275,7 @@ function launchFinale() {
     createFirework(
       rect.width * (0.18 + Math.random() * 0.64),
       rect.height * (0.14 + Math.random() * 0.3),
-      ["#d9ae62", "#fff3ba", "#7f2036", "#1f6f5b"][launches % 4]
+      ["#d9ae62", "#fff3ba", "#7f2036", "#1f6f5b"][launches % 4],
     );
     launches += 1;
     if (launches > 16) clearInterval(timer);
@@ -257,7 +294,7 @@ function createFirework(x, y, color) {
       vy: Math.sin(angle) * speed,
       life: 70 + Math.random() * 26,
       age: 0,
-      color
+      color,
     });
   }
 }
@@ -298,7 +335,9 @@ drawFireworks();
 
 lightButton.addEventListener("click", () => {
   body.classList.add("is-awake");
-  document.querySelector(".planet-section").scrollIntoView({ behavior: "smooth" });
+  document
+    .querySelector(".planet-section")
+    .scrollIntoView({ behavior: "smooth" });
 });
 
 magicButton.addEventListener("click", openMagicBox);

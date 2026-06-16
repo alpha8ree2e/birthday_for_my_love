@@ -6,8 +6,30 @@
     <title>Happy 26th Birthday</title>
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body>
+  <body class="is-locked">
     <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+    <section class="gate" id="gate" aria-label="生日网页密码">
+      <div class="gate__panel">
+        <p class="eyebrow">Private Birthday Spell</p>
+        <h1>输入口令</h1>
+        <p>这份生日夜，只为朱子仪打开。</p>
+        <form class="gate__form" id="gateForm">
+          <label for="gatePassword">Password</label>
+          <input
+            id="gatePassword"
+            name="password"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="请输入口令"
+            aria-describedby="gateError"
+          />
+          <button class="primary-button" type="submit">打开生日夜</button>
+        </form>
+        <p class="gate__error" id="gateError" aria-live="polite"></p>
+      </div>
+    </section>
 
     <main class="page-shell">
       <section class="hero" aria-label="生日封面">
