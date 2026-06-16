@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy 26th Birthday</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+    <main class="page-shell">
+      <section class="hero" aria-label="生日封面">
+        <div class="hero__image" aria-hidden="true"></div>
+        <div class="hero__shade" aria-hidden="true"></div>
+        <div class="hero__content">
+          <p class="eyebrow">Ziyi Zhu · 2000.06.15 - 2026.06.15</p>
+          <h1>朱子仪，生日快乐</h1>
+          <p class="hero__copy">
+            把今天做成一场属于你的魔法仪式。不是因为今天特别，所以你被庆祝；是因为你在今天出生，所以今天特别。
+          </p>
+          <button class="primary-button" id="lightButton" type="button">点亮我的生日夜</button>
+        </div>
+      </section>
+
+      <section class="planet-section" aria-label="你的专属星球">
+        <div class="section-heading">
+          <p class="eyebrow">The Enchanted Orbit</p>
+          <h2>你的专属星轨</h2>
+        </div>
+        <div class="planet-layout">
+          <div class="planet" id="planet">
+            <div class="planet__ring"></div>
+            <div class="planet__core">
+              <span class="planet__moon"></span>
+              <span class="planet__cake"></span>
+              <span class="planet__flower planet__flower--one"></span>
+              <span class="planet__flower planet__flower--two"></span>
+            </div>
+          </div>
+          <div class="planet-note">
+            <p>这里不写故事梗概，只借一点你喜欢的魔法世界，为 Ziyi Zhu 保存一盏生日夜里的光。</p>
+            <p>愿 26 岁的你无忧无虑，一直幸福，永远健康，永远快乐。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wish-section" aria-label="26个生日祝福">
+        <div class="section-heading">
+          <p class="eyebrow">26 Charms</p>
+          <h2>给 Stephanie Zhu 的 26 道祝福</h2>
+        </div>
+        <div class="wish-progress" aria-live="polite">
+          <span id="wishCount">0</span><span>/26 已点亮</span>
+        </div>
+        <div class="wish-grid" id="wishGrid"></div>
+      </section>
+
+      <section class="magic-section" aria-label="生日魔法盒">
+        <div class="magic-box" id="magicBox">
+          <div class="magic-box__lid"></div>
+          <div class="magic-box__body"></div>
+          <div class="magic-box__ribbon"></div>
+          <div class="magic-box__sparkles" id="sparkles"></div>
+        </div>
+        <div class="magic-copy">
+          <p class="eyebrow">Birthday Spell</p>
+          <h2>生日祝福盒</h2>
+          <p id="magicLine">愿今天的每一束光，都为你而亮。</p>
+          <button class="secondary-button" id="magicButton" type="button">释放一束祝福</button>
+        </div>
+      </section>
+
+      <section class="cake-section" aria-label="26岁生日蛋糕">
+        <div class="section-heading">
+          <p class="eyebrow">Make A Wish</p>
+          <h2>点燃 26 岁的生日蜡烛</h2>
+          <p class="section-copy">拖动打火机，靠近数字蜡烛的烛芯。两根都点亮以后，生日夜会放一场烟花。</p>
+        </div>
+        <div class="cake-stage" id="cakeStage">
+          <canvas id="fireworkCanvas" aria-hidden="true"></canvas>
+          <div class="castle-silhouette" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="birthday-cake" aria-hidden="true">
+            <div class="candles">
+              <div class="number-candle number-candle--two" data-candle>
+                <span class="number">2</span>
+                <span class="wick"></span>
+                <span class="candle-flame"></span>
+              </div>
+              <div class="number-candle number-candle--six" data-candle>
+                <span class="number">6</span>
+                <span class="wick"></span>
+                <span class="candle-flame"></span>
+              </div>
+            </div>
+            <div class="cake-top"></div>
+            <div class="cake-body">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cake-plate"></div>
+          </div>
+          <div class="lighter" id="lighter" role="button" aria-label="拖动打火机点燃蜡烛" tabindex="0">
+            <span class="lighter-flame"></span>
+            <span class="lighter-head"></span>
+            <span class="lighter-body"></span>
+          </div>
+          <p class="cake-status" id="cakeStatus" aria-live="polite">拖动打火机，点亮 2 和 6。</p>
+        </div>
+      </section>
+
+      <section class="letter-section letter-section--locked" id="letterSection" aria-label="生日信">
+        <div class="letter-card">
+          <p class="eyebrow">For Ziyi</p>
+          <h2>给朱子仪</h2>
+          <p>
+            生日快乐，朱子仪。愿你新的一岁无忧无虑，一直幸福，永远健康，永远快乐。
+          </p>
+          <p>
+            愿你每天醒来都能轻松一点，心里少一点烦恼，多一点确定的开心。愿生活把好的东西慢慢交到你手上，也愿你一直被温柔、平安和好运保护。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>
